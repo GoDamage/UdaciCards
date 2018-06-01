@@ -1,7 +1,8 @@
+import { combineReducers } from "redux";
 import { ADD_DECK, ADD_CARD } from "../actions";
 
 // ToDo: move out.
-const initialState = {
+const initialDecks = {
   React: {
     title: "React",
     questions: [
@@ -27,7 +28,7 @@ const initialState = {
   }
 };
 
-const deckList = (state = initialState, action) => {
+const deckList = (state = initialDecks, action) => {
   switch (action.type) {
     case ADD_DECK:
       return {
@@ -50,4 +51,16 @@ const deckList = (state = initialState, action) => {
   }
 };
 
-export default deckList;
+const quiz = (state = [], action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  deckList,
+  quiz
+});
+
+export default rootReducer;

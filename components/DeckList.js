@@ -27,11 +27,16 @@ class DeckList extends Component {
   };
 
   render() {
-    const { decks } = this.props;
+    const { decks, navigation } = this.props;
     return (
       <StyledView>
         {decks.map(deck => (
-          <StyledDeck key={deck.title}>
+          <StyledDeck
+            key={deck.title}
+            onPress={() =>
+              navigation.navigate("DeckHome", { name: deck.title })
+            }
+          >
             <StyledDeckTitle>{deck.title}</StyledDeckTitle>
             <Text>{deck.questions.length} cards</Text>
           </StyledDeck>

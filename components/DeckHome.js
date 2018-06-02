@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 
 class DeckHome extends Component {
   render() {
+    const { name, questions } = this.props.navigation.state.params;
     return (
       <View>
-        <Text>Deck Home</Text>
+        <Text>{name}</Text>
       </View>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { KeyboardAvoidingView } from "react-native";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { StyleSheet, Text, View } from "react-native";
 import rootReducer from "./reducers";
 import NavigationStack from "./components/NavigationStack";
 import { darkGreen } from "./utils/colors";
@@ -12,7 +12,9 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <NavigationStack />
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+          <NavigationStack />
+        </KeyboardAvoidingView>
       </Provider>
     );
   }

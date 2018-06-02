@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { lightBlue, lightYellow } from "../utils/colors";
@@ -28,19 +28,28 @@ class DeckList extends Component {
 
   render() {
     const { decks, navigation } = this.props;
+
+    const DeckListItem = ({ item }) => (
+      <StyledDeck
+        key={item.title}
+        onPress={() =>
+          navigation.navigate("DeckHome", {
+            name: item.title,
+            questions: item.questions
+          })
+        }
+      >
+        <StyledDeckTitle>{item.title}</StyledDeckTitle>
+        <Text>{item.questions.length} cards</Text>
+      </StyledDeck>
+    );
     return (
       <StyledView>
-        {decks.map(deck => (
-          <StyledDeck
-            key={deck.title}
-            onPress={() =>
-              navigation.navigate("DeckHome", { name: deck.title })
-            }
-          >
-            <StyledDeckTitle>{deck.title}</StyledDeckTitle>
-            <Text>{deck.questions.length} cards</Text>
-          </StyledDeck>
-        ))}
+        <FlatList
+          data={decks}
+          keyExtractor={item => item.title}
+          renderItem={DeckListItem}
+        />
       </StyledView>
     );
   }

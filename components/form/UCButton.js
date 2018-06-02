@@ -13,7 +13,8 @@ const buttonTypeColors = {
 
 function UCButton({ text, buttonType, onPress }) {
   const StyledButton = styled.TouchableOpacity`
-    padding: 10px 20px;
+    margin-bottom: 20px;
+    padding: 15px 40px;
     border-radius: 5px;
     background-color: ${buttonType
       ? buttonTypeColors[buttonType]

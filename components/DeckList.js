@@ -34,8 +34,7 @@ class DeckList extends Component {
         key={item.title}
         onPress={() =>
           navigation.navigate("DeckHome", {
-            name: item.title,
-            questions: item.questions
+            name: item.title
           })
         }
       >

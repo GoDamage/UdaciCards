@@ -6,6 +6,7 @@ import { lightYellow } from "../../utils/colors";
 
 const StyledView = styled.View`
   padding: 30px;
+  width: 100%;
 `;
 const StyledLabel = styled.Text`
   margin-bottom: 30px;

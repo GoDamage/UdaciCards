@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import UCButton from "./form/UCButton";
 import { lightYellow } from "../utils/colors";
+import { clearLocalNotification, setLocalNotification } from "../utils/helpers";
 
 const StyledView = styled.View`
   flex: 1;
@@ -25,6 +26,10 @@ const StyledText = styled.Text`
 `;
 
 class QuizFinished extends Component {
+  componentDidMount() {
+    clearLocalNotification().then(setLocalNotification);
+  }
+
   render() {
     const { correct, questions, navigation } = this.props;
     return (

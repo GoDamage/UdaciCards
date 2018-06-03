@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { startQuiz } from "../actions/quizActions";
 import UCButton from "./form/UCButton";
 import { lightYellow } from "../utils/colors";
 import { clearLocalNotification, setLocalNotification } from "../utils/helpers";
@@ -31,7 +32,13 @@ class QuizFinished extends Component {
   }
 
   render() {
-    const { correct, questions, navigation } = this.props;
+    const { name, correct, questions, navigation, startQuiz } = this.props;
+
+    handleQuizRestart = () => {
+      startQuiz({ name: name, questions: questions });
+      navigation.navigate("Quiz");
+    };
+
     return (
       <StyledView>
         <StyledCongratsText>Quiz Finished!</StyledCongratsText>
@@ -42,9 +49,18 @@ class QuizFinished extends Component {
           You got {correct} out of {questions.length} questions correct.
         </StyledText>
         <UCButton
-          text="Finished"
+          text="Restart Quiz"
           buttonType="primary"
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => handleQuizRestart()}
+        />
+        <UCButton
+          text="Back to Deck"
+          buttonType="secondary"
+          onPress={() =>
+            navigation.navigate("DeckHome", {
+              name: name
+            })
+          }
         />
       </StyledView>
     );
@@ -52,13 +68,14 @@ class QuizFinished extends Component {
 }
 
 QuizFinished.propTypes = {
+  name: PropTypes.string.isRequired,
   correct: PropTypes.number.isRequired,
   questions: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
-  const { correct, questions } = state.quiz;
-  return { correct, questions };
+  const { name, correct, questions } = state.quiz;
+  return { name, correct, questions };
 }
 
-export default connect(mapStateToProps)(QuizFinished);
+export default connect(mapStateToProps, { startQuiz })(QuizFinished);

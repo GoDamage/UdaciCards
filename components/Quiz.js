@@ -1,10 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import { View, Text } from "react-native";
 import UCButton from "./form/UCButton";
 import { nextQuestion, correctAnswer } from "../actions/quizActions";
 import QuizFinished from "./QuizFinished";
+import { lightYellow } from "../utils/colors";
+
+const StyledView = styled.View`
+  flex: 1;
+  width: 100%;
+  background-color: ${lightYellow};
+  padding: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+const StyledProgressText = styled.Text`
+  margin-bottom: 40px;
+`;
+const StyledCardText = styled.Text`
+  background-color: white;
+  width: 100%
+  padding: 40px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  text-align: center;
+`;
+const StyledButtons = styled.View`
+  margin-top: 40px;
+`;
 
 class Quiz extends Component {
   state = {
@@ -24,38 +49,40 @@ class Quiz extends Component {
   };
 
   render() {
-    const { name, questions, currentIndex, correct } = this.props;
+    const { name, questions, currentIndex, correct, navigation } = this.props;
     const { showAnswer } = this.state;
 
     if (currentIndex === questions.length) {
-      return <QuizFinished />;
+      return <QuizFinished navigation={navigation} />;
     } else {
       return (
-        <View>
-          <Text>
+        <StyledView>
+          <StyledProgressText>
             Question {currentIndex + 1} of {questions.length}
-          </Text>
+          </StyledProgressText>
           {showAnswer === false ? (
-            <Text>Question: {questions[currentIndex].question}</Text>
+            <StyledCardText>{questions[currentIndex].question}</StyledCardText>
           ) : (
-            <Text>Answer: {questions[currentIndex].answer}</Text>
+            <StyledCardText>{questions[currentIndex].answer}</StyledCardText>
           )}
           <UCButton
             text={showAnswer === true ? "Show Question" : "Show Answer"}
             buttonType="primary"
             onPress={() => this.toggleAnswer()}
           />
-          <UCButton
-            text="Correct"
-            buttonType="correct"
-            onPress={() => this.onAnswer(true)}
-          />
-          <UCButton
-            text="Incorrect"
-            buttonType="incorrect"
-            onPress={() => this.onAnswer(false)}
-          />
-        </View>
+          <StyledButtons>
+            <UCButton
+              text="Correct"
+              buttonType="correct"
+              onPress={() => this.onAnswer(true)}
+            />
+            <UCButton
+              text="Incorrect"
+              buttonType="incorrect"
+              onPress={() => this.onAnswer(false)}
+            />
+          </StyledButtons>
+        </StyledView>
       );
     }
   }

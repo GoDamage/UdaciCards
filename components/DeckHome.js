@@ -42,11 +42,13 @@ class DeckHome extends Component {
           buttonType="primary"
           onPress={() => navigation.navigate("NewCard", { name: title })}
         />
-        <UCButton
-          text="Start Quiz"
-          buttonType="secondary"
-          onPress={() => handleQuizStart()}
-        />
+        {questions.length > 0 && (
+          <UCButton
+            text="Start Quiz"
+            buttonType="secondary"
+            onPress={() => handleQuizStart()}
+          />
+        )}
       </StyledView>
     );
   }

@@ -1,32 +1,12 @@
 import { combineReducers } from "redux";
-import { ADD_DECK, ADD_CARD } from "../actions";
-
-// ToDo: move out.
-const initialDecks = {
-  React: {
-    title: "React",
-    questions: [
-      {
-        question: "What is React?",
-        answer: "A library for managing user interfaces"
-      },
-      {
-        question: "Where do you make Ajax requests in React?",
-        answer: "The componentDidMount lifecycle event"
-      }
-    ]
-  },
-  JavaScript: {
-    title: "JavaScript",
-    questions: [
-      {
-        question: "What is a closure?",
-        answer:
-          "The combination of a function and the lexical environment within which that function was declared."
-      }
-    ]
-  }
-};
+import {
+  ADD_DECK,
+  ADD_CARD,
+  START_QUIZ,
+  NEXT_QUESTION,
+  CORRECT_ANSWER
+} from "../actions/types";
+import { initialDecks } from "../utils/data";
 
 const deckList = (state = initialDecks, action) => {
   switch (action.type) {
@@ -51,8 +31,20 @@ const deckList = (state = initialDecks, action) => {
   }
 };
 
-const quiz = (state = [], action) => {
+const quiz = (state = {}, action) => {
   switch (action.type) {
+    case START_QUIZ:
+      return {
+        name: action.data.name,
+        questions: action.data.questions,
+        currentIndex: 0,
+        correct: 0
+      };
+    case NEXT_QUESTION:
+      return Object.assign({}, state, { currentIndex: action.nextIndex });
+    case CORRECT_ANSWER:
+      return Object.assign({}, state, { correct: action.tally });
+      return { ...state, [correct]: action.tally };
     default:
       return state;
   }

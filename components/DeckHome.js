@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import UCButton from "./form/UCButton";
+import { startQuiz } from "../actions/quizActions";
 import { lightBlue } from "../utils/colors";
 
 const StyledView = styled.View`
@@ -25,7 +26,12 @@ const StyledSubText = styled.Text`
 
 class DeckHome extends Component {
   render() {
-    const { title, questions, navigation } = this.props;
+    const { title, questions, navigation, startQuiz } = this.props;
+
+    handleQuizStart = () => {
+      startQuiz({ name: title, questions: questions });
+      navigation.navigate("Quiz");
+    };
 
     return (
       <StyledView>
@@ -39,7 +45,7 @@ class DeckHome extends Component {
         <UCButton
           text="Start Quiz"
           buttonType="secondary"
-          onPress={() => navigation.navigate("Quiz")}
+          onPress={() => handleQuizStart()}
         />
       </StyledView>
     );
@@ -52,4 +58,4 @@ function mapStateToProps(state, ownProps) {
   return { title, questions };
 }
 
-export default connect(mapStateToProps)(DeckHome);
+export default connect(mapStateToProps, { startQuiz })(DeckHome);

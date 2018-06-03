@@ -5,7 +5,7 @@ import { View, Text } from "react-native";
 import styled from "styled-components";
 import UCTextInput from "./form/UCTextInput";
 import UCButton from "./form/UCButton";
-import { addDeck } from "../actions";
+import { addDeck } from "../actions/deckActions";
 import { lightBlue, lightYellow } from "../utils/colors";
 
 const StyledView = styled.View`
